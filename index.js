@@ -125,18 +125,18 @@ app.post('/api/users/:_id/exercises',(req,res)=>{
   //3
   
   app.get('/api/users/:_id/logs',(req,res)=>{
-    const { from,to,limit }=req.query;
+    const { from, to, limit }=req.query;
     let idJson = { "id":req.params._id};
     let idToCheck = idJson.id;
 
     //Check ID
     UserInfo.findById(idToCheck,(err,data)=>{
       var query ={
-        username:data.username
+        username: data.username
       }
 
       if (from !==undefined && to === undefined){
-        query.date = {$gte: new Data(from)}
+        query.date = {$gte: new Date(from)}
       } else if (to != undefined && from === undefined){
         query.date = {$lte:new Date(to)}
       } else if (from !== undefined && to !== undefined){
@@ -156,7 +156,7 @@ app.post('/api/users/:_id/exercises',(req,res)=>{
       console.log("error with ID=> ",err)
     } else {
 
-      ExerciseInfo.find((query),null,{limit: limitChecker(+limit)},(err,data)=>{
+      ExerciseInfo.find((query),null,{limit: limitChecker(+limit)},(err,docs)=>{
         let loggedArray = [];
         if(err){
           console.log("error with query =>",err);
@@ -196,6 +196,16 @@ app.post('/api/users/:_id/exercises',(req,res)=>{
   })
 })
 
+  // 4
+  app.get('/api/users',(req,res)=>{
+    UserInfo.find({},(err,data)=>{
+      if(err){
+        res.send("No User Found");
+      } else{
+        res.json(data);
+      }
+    })
+  })
 
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log('Your app is listening on port ' + listener.address().port)
