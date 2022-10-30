@@ -173,7 +173,7 @@ app.post('/api/users/:_id/exercises',(req,res)=>{
 
           const test = new LogInfo({
             "username":data.username,
-            "cout" : loggedArray.length,
+            "count" : loggedArray.length,
             "log":loggedArray
           })
 
