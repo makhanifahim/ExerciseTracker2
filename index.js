@@ -174,7 +174,7 @@ app.post('/api/users/:_id/exercises',(req,res)=>{
           const test = new LogInfo({
             "username":data.username,
             "count" : loggedArray.length,
-            "log":loggedArray
+            "log":loggedArray,
           })
 
           test.save((err,data)=>{
@@ -185,7 +185,7 @@ app.post('/api/users/:_id/exercises',(req,res)=>{
               res.json({
                 "_id":idToCheck,
                 "username":data.username,
-                "count":data.count,
+                "count":loggedArray.length,
                 "log": loggedArray
               })
             }
